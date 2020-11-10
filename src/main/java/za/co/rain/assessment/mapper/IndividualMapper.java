@@ -8,7 +8,7 @@ import za.co.rain.assessment.model.Individual;
 
 @Mapper(componentModel = "spring")
 public interface IndividualMapper {
-    @Mapping(source = "fullName", target = "fullName")
+//    @Mapping(source = "fullName", target = "fullName")
     Individual toDto(IndividualEntity individualEntity);
 
     @InheritInverseConfiguration

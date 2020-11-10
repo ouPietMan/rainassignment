@@ -1,56 +1,60 @@
 package za.co.rain.assessment.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import za.co.rain.assessment.entity.IndividualEntity;
+import za.co.rain.assessment.exception.IndividualNotFoundException;
+import za.co.rain.assessment.mapper.IndividualMapper;
 import za.co.rain.assessment.model.Individual;
-import za.co.rain.assessment.model.IndividualCreate;
-import za.co.rain.assessment.model.IndividualUpdate;
 import za.co.rain.assessment.repository.IndividualRepository;
 
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class IndividualServiceImpl implements IndividualService {
+public class IndividualServiceImpl implements IndividualService{
 
+    private final IndividualMapper individualMapper;
+    private final IndividualRepository entityRepository;
 
-    @Override
-    public Individual createIndividual(final IndividualCreate individual) {
-        Individual individualLocal = new Individual();
-        individualLocal.setId(individual.getId());
-        individualLocal.setHref(individual.getHref());
-        individualLocal.setAristocraticTitle(individual.getAristocraticTitle());
-        individualLocal.setBirthDate(individual.getBirthDate());
-        individualLocal.setCountryOfBirth(individual.getCountryOfBirth());
-        individualLocal.setDeathDate(individual.getDeathDate());
-        individualLocal.setFamilyName(individual.getFamilyName());
-        individualLocal.setFullName(individual.getFullName());
-        individualLocal.setGender(individual.getGender());
-
-        return null;
+    @Autowired
+    public IndividualServiceImpl(IndividualMapper individualMapper, IndividualRepository entityRepository) {
+        this.individualMapper = individualMapper;
+        this.entityRepository = entityRepository;
     }
 
     @Override
-    public Individual deleteIndividual(String id) {
-        return null;
+    public Individual findIndividual(String id) {
+        return entityRepository.findById(id)
+                .map(individualMapper::toDto)
+                .orElseThrow(IndividualNotFoundException::new);
     }
 
     @Override
-    public List<Individual> listIndividual(Optional<String> fields, Optional<Integer> offset, Optional<Integer> limit) {
-        return null;
+    public List<Individual> findAllIndividuals() {
+        return entityRepository.findAll().stream()
+                .map(individualMapper::toDto)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public Individual patchIndividual(String id, IndividualUpdate individual) {
-        return null;
+    public Individual createIndividual(Individual individual) {
+        IndividualEntity individualEntity = individualMapper.fromDto(individual);
+        IndividualEntity save = entityRepository.save(individualEntity);
+        return individualMapper.toDto(save);
     }
 
     @Override
-    public Individual retrieveIndividual(String id, Optional<String> fields) {
-        return null;
+    public void deleteIndividual(String id) {
+        entityRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateIndividual(Individual individual) {
+        IndividualEntity individualEntity = individualMapper.fromDto(individual);
+        entityRepository.save(individualEntity);
+
     }
 }

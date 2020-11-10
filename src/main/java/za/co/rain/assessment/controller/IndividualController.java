@@ -1,13 +1,8 @@
 package za.co.rain.assessment.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import javax.validation.Valid;
-
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -17,27 +12,34 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import za.co.rain.assessment.api.IndividualApi;
 import za.co.rain.assessment.model.Individual;
-import za.co.rain.assessment.model.IndividualCreate;
-import za.co.rain.assessment.model.IndividualUpdate;
-import za.co.rain.assessment.service.IndividualServiceImpl;
+import za.co.rain.assessment.service.IndividualService;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class IndividualController implements IndividualApi {
 
+
+    private final IndividualService individualService;
+
     @Autowired
-    private IndividualServiceImpl individualServiceImpl;
+    public IndividualController(IndividualService individualService) {
+        this.individualService = individualService;
+    }
 
     @Override
     @PostMapping("/individual")
-    public ResponseEntity<Individual> createIndividual(@RequestBody final IndividualCreate individual) {
-        return ResponseEntity.ok().body(individualServiceImpl.createIndividual(individual));
+    public ResponseEntity<Individual> createIndividual(@RequestBody final Individual individual) {
+        Individual individualCreated = individualService.createIndividual(individual);
+        return new ResponseEntity<>(individualCreated, HttpStatus.OK);
     }
 
     @Override
     @DeleteMapping("/individual/{id}")
     public ResponseEntity<Void> deleteIndividual(final @PathVariable String id) {
-        individualServiceImpl.deleteIndividual(id);
-        return ResponseEntity.ok().build();
+        individualService.deleteIndividual(id);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @Override
@@ -45,18 +47,21 @@ public class IndividualController implements IndividualApi {
     public ResponseEntity<List<Individual>> listIndividual(final Optional<String> fields,
                                                            final Optional<Integer> offset,
                                                            final Optional<Integer> limit) {
-        return ResponseEntity.ok().body(individualServiceImpl.listIndividual(fields, offset, limit));
+        List<Individual> allIndividuals = individualService.findAllIndividuals();
+        return new ResponseEntity<>(allIndividuals, HttpStatus.OK);
     }
 
     @Override
     @PatchMapping("/individual/{id}")
-    public ResponseEntity<Individual> patchIndividual(final @PathVariable String id, @RequestBody final IndividualUpdate individual) {
-        return ResponseEntity.ok().body(individualServiceImpl.patchIndividual(id, individual));
+    public ResponseEntity<Individual> patchIndividual(final @PathVariable String id, @RequestBody final Individual individual) {
+        individualService.updateIndividual(individual);
+        return new ResponseEntity<>(individual, HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/individual/{id}")
     public ResponseEntity<Individual> retrieveIndividual(final @PathVariable String id, final Optional<String> fields) {
-        return ResponseEntity.ok().body(individualServiceImpl.retrieveIndividual(id, fields));
+        Individual individual = individualService.findIndividual(id);
+        return new ResponseEntity(individual, HttpStatus.CREATED);
     }
 }

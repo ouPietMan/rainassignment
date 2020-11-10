@@ -19,8 +19,9 @@ class IndividualMapperTest {
     }
 
     @Test
-    void toEntity(){
+    void givenIndividualThenMappedToIndividualEntity(){
         Individual individualLocal = new Individual();
+        individualLocal.setId("id");
         individualLocal.setFullName("fullName");
 
         IndividualEntity individualEntity = individualMapper.fromDto(individualLocal);
@@ -30,9 +31,11 @@ class IndividualMapperTest {
     }
 
     @Test
-    void fromEntity(){
-        IndividualEntity individualLocal = new IndividualEntity();
-        individualLocal.setFullName("fullName");
+    void givenIndividualEntityThenMappedToIndividual(){
+        IndividualEntity individualLocal = IndividualEntity.builder()
+                .id("id")
+                .fullName("fullName")
+                .build();
 
         Individual individualEntity = individualMapper.toDto(individualLocal);
 

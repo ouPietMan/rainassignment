@@ -114,7 +114,7 @@
           "description" : "The Individual to be created",
           "required" : true,
           "schema" : {
-            "$ref" : "#/definitions/Individual_Create"
+            "$ref" : "#/definitions/Individual"
           }
         } ],
         "responses" : {
@@ -310,7 +310,7 @@
           "description" : "The Individual to be updated",
           "required" : true,
           "schema" : {
-            "$ref" : "#/definitions/Individual_Update"
+            "$ref" : "#/definitions/Individual"
           }
         } ],
         "responses" : {
@@ -368,122 +368,6 @@
   },
   "definitions" : {
     "Individual" : {
-      "type" : "object",
-      "required" : [ "id" ],
-      "properties" : {
-        "id" : {
-          "type" : "string",
-          "description" : "Unique identifier of the organization"
-        },
-        "href" : {
-          "type" : "string",
-          "description" : "Hyperlink to access the organization"
-        },
-        "aristocraticTitle" : {
-          "type" : "string",
-          "description" : "e.g. Baron, Graf, Earl,…"
-        },
-        "birthDate" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Birth date"
-        },
-        "countryOfBirth" : {
-          "type" : "string",
-          "description" : "Country where the individual was born"
-        },
-        "deathDate" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Date of death"
-        },
-        "familyName" : {
-          "type" : "string",
-          "description" : "Contains the non-chosen or inherited name. Also known as last name in the Western context"
-        },
-        "fullName" : {
-          "type" : "string",
-          "description" : "Full name flatten (first, middle, and last names)"
-        },
-        "gender" : {
-          "type" : "string",
-          "description" : "Gender"
-        },
-        "@baseType" : {
-          "type" : "string",
-          "description" : "When sub-classing, this defines the super-class"
-        },
-        "@schemaLocation" : {
-          "type" : "string",
-          "format" : "uri",
-          "description" : "A URI to a JSON-Schema file that defines additional attributes and relationships"
-        },
-        "@type" : {
-          "type" : "string",
-          "description" : "When sub-classing, this defines the sub-class entity name"
-        }
-      },
-      "description" : "Individual represents a single human being (a man, woman or child). The individual can be a customer, an employee or any other person that the organization needs to store information about."
-    },
-    "Individual_Create" : {
-      "type" : "object",
-      "required" : [ "id" ],
-      "properties" : {
-        "id" : {
-          "type" : "string",
-          "description" : "Unique identifier of the organization"
-        },
-        "href" : {
-          "type" : "string",
-          "description" : "Hyperlink to access the organization"
-        },
-        "aristocraticTitle" : {
-          "type" : "string",
-          "description" : "e.g. Baron, Graf, Earl,…"
-        },
-        "birthDate" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Birth date"
-        },
-        "countryOfBirth" : {
-          "type" : "string",
-          "description" : "Country where the individual was born"
-        },
-        "deathDate" : {
-          "type" : "string",
-          "format" : "date-time",
-          "description" : "Date of death"
-        },
-        "familyName" : {
-          "type" : "string",
-          "description" : "Contains the non-chosen or inherited name. Also known as last name in the Western context"
-        },
-        "fullName" : {
-          "type" : "string",
-          "description" : "Full name flatten (first, middle, and last names)"
-        },
-        "gender" : {
-          "type" : "string",
-          "description" : "Gender"
-        },
-        "@baseType" : {
-          "type" : "string",
-          "description" : "When sub-classing, this defines the super-class"
-        },
-        "@schemaLocation" : {
-          "type" : "string",
-          "format" : "uri",
-          "description" : "A URI to a JSON-Schema file that defines additional attributes and relationships"
-        },
-        "@type" : {
-          "type" : "string",
-          "description" : "When sub-classing, this defines the sub-class entity name"
-        }
-      },
-      "description" : "Individual represents a single human being (a man, woman or child). The individual can be a customer, an employee or any other person that the organization needs to store information about."
-    },
-    "Individual_Update" : {
       "type" : "object",
       "required" : [ "id" ],
       "properties" : {
