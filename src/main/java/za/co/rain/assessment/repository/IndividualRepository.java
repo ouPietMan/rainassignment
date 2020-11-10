@@ -1,5 +1,9 @@
 package za.co.rain.assessment.repository;
 
-public interface IndividualRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import za.co.rain.assessment.entity.IndividualEntity;
+
+
+public interface IndividualRepository extends JpaRepository<IndividualEntity, String> {
 
 }
