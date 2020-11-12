@@ -32,7 +32,7 @@ public class IndividualController implements IndividualApi {
     @PostMapping("/individual")
     public ResponseEntity<Individual> createIndividual(@RequestBody final Individual individual) {
         Individual individualCreated = individualService.createIndividual(individual);
-        return new ResponseEntity<>(individualCreated, HttpStatus.OK);
+        return new ResponseEntity<>(individualCreated, HttpStatus.CREATED);
     }
 
     @Override
@@ -62,6 +62,6 @@ public class IndividualController implements IndividualApi {
     @GetMapping("/individual/{id}")
     public ResponseEntity<Individual> retrieveIndividual(final @PathVariable String id, final Optional<String> fields) {
         Individual individual = individualService.findIndividual(id);
-        return new ResponseEntity(individual, HttpStatus.CREATED);
+        return new ResponseEntity(individual, HttpStatus.OK);
     }
 }
